@@ -95,7 +95,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: https://uploads.github.com/repos/kedacore/keda/releases/${{ steps.get-release-info.outputs.id }}/assets?name=keda-${{ steps.get_version.outputs.VERSION }}.yaml
+          upload_url: https://uploads.github.com/repos/fasttrack-solutions/keda/releases/${{ steps.get-release-info.outputs.id }}/assets?name=keda-${{ steps.get_version.outputs.VERSION }}.yaml
           asset_path: keda-${{ steps.get_version.outputs.VERSION }}.yaml
           asset_name: keda-${{ steps.get_version.outputs.VERSION }}.yaml
           asset_content_type: application/x-yaml
