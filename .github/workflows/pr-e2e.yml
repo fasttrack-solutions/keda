@@ -16,9 +16,9 @@ jobs:
       image_tag: "pr-${{ steps.parser.outputs.pr_num }}-${{ steps.parser.outputs.commit_sha }}"
       commit_sha: ${{ steps.parser.outputs.commit_sha }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
-      - uses: tspascoal/get-user-teams-membership@v1
+      - uses: tspascoal/get-user-teams-membership@39b5264024b7c3bd7480de2f2c8d3076eed49ec5 # v1.0.4
         id: checkUserMember
         with:
           username: ${{ github.actor }}
@@ -27,7 +27,7 @@ jobs:
 
       - name: Update comment with the execution url
         if: ${{ startsWith(github.event.comment.body,'/run-e2e') && steps.checkUserMember.outputs.isTeamMember == 'true' }}
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@67dcc547d311b736a8e6c5c236542148a47adc3d # v2.1.1
         with:
           comment-id: ${{ github.event.comment.id }}
           body: |
@@ -59,7 +59,7 @@ jobs:
     if: needs.triage.outputs.run-e2e == 'true'
     steps:
       - name: Set status in-progress
-        uses: LouisBrunner/checks-action@v1.5.0
+        uses: LouisBrunner/checks-action@87e7256e004e2625f00da7b5fd8c855cb520da89 # v1.5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ needs.triage.outputs.commit_sha }}
@@ -67,7 +67,7 @@ jobs:
           status: in_progress
           details_url: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
       - name: Register workspace path
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
@@ -80,7 +80,7 @@ jobs:
           gh pr checkout ${{ needs.triage.outputs.pr_num }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2.2.0
         with:
           # Username used to log in to a Docker registry. If not set then no login will occur
           username: ${{ github.repository_owner }}
@@ -102,7 +102,7 @@ jobs:
     if: needs.triage.outputs.run-e2e == 'true'
     steps:
       - name: Set status in-progress
-        uses: LouisBrunner/checks-action@v1.5.0
+        uses: LouisBrunner/checks-action@87e7256e004e2625f00da7b5fd8c855cb520da89 # v1.5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ needs.triage.outputs.commit_sha }}
@@ -110,7 +110,7 @@ jobs:
           status: in_progress
           details_url: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
       - name: Register workspace path
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
@@ -194,7 +194,7 @@ jobs:
           TEST_CLUSTER_NAME: keda-pr-run
 
       - name: React to comment with success
-        uses: dkershner6/reaction-action@v1
+        uses: dkershner6/reaction-action@e0df31eafeb8db3b7f56b7054f679846658b88e1 # v1
         if: steps.test.outcome == 'success'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -202,7 +202,7 @@ jobs:
           reaction: "+1"
 
       - name: Set status success
-        uses: LouisBrunner/checks-action@v1.5.0
+        uses: LouisBrunner/checks-action@87e7256e004e2625f00da7b5fd8c855cb520da89 # v1.5.0
         if: steps.test.outcome == 'success'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -212,7 +212,7 @@ jobs:
           details_url: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
 
       - name: React to comment with failure
-        uses: dkershner6/reaction-action@v1
+        uses: dkershner6/reaction-action@e0df31eafeb8db3b7f56b7054f679846658b88e1 # v1
         if: steps.test.outcome != 'success'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -220,7 +220,7 @@ jobs:
           reaction: "-1"
 
       - name: Set status failure
-        uses: LouisBrunner/checks-action@v1.5.0
+        uses: LouisBrunner/checks-action@87e7256e004e2625f00da7b5fd8c855cb520da89 # v1.5.0
         if: steps.test.outcome != 'success'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
